@@ -44,17 +44,16 @@ void close_driver(const char* driver_name, int fd_driver) {
     }
 }
 
-
 int main(void) {
 
   int fd_ioctl = open_driver(IOCTL_DRIVER_NAME);
-  uint32_t value;
+  uint32_t value = 0x12345678;
 	if (ioctl(fd_ioctl, IOCTL_BASE_GET_MUIR, &value) < 0) {
 			perror("Error ioctl PL_AXI_DMA_GET_NUM_DEVICES");
 			exit(EXIT_FAILURE);
 	}
 
-  printf("Value is %u\n", value);
+  printf("Value is %X\n", value);
 
 	close_driver(IOCTL_DRIVER_NAME, fd_ioctl);
 

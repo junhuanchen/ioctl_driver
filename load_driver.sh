@@ -18,5 +18,4 @@ echo "Replacing the old nodes"
 mknod /dev/${device_name} c ${major_number[0]} 0
 major=$(cat /proc/devices | grep "$device_name")
 
-echo "To remove a device, do \"/sbin/rmmod $device_name \" and \"rm -f /dev/${module}\""
-
+echo "To remove a device, do sudo rmmod ./dev/$device_name.ko"

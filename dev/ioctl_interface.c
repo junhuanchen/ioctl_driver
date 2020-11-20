@@ -139,13 +139,19 @@ long ioctl_d_interface_ioctl(struct file *filp, unsigned int cmd, unsigned long 
 	switch (cmd) {
 		// Get the number of channel found
 		case IOCTL_BASE_GET_MUIR:
-			printk(KERN_INFO "<%s> ioctl: IOCTL_BASE_GET_MUIR\n", DEVICE_NAME);
-			uint32_t value = 0x12345678;
-			if (copy_to_user((uint32_t*) arg, &value, sizeof(value))){
+		{
+			uint32_t value = 0x0;
+            if (raw_copy_from_user(&value, (void __user *)arg, sizeof(value)))
+            {
+                printk(KERN_ERR "%s: copy_from_user error\n", __func__);
+                break;
+            }
+			printk(KERN_INFO "<%s> ioctl: IOCTL_BASE_GET_MUIR %X\n", DEVICE_NAME, value);
+			if (raw_copy_to_user((uint32_t*) arg, &value, sizeof(value))){
 				return -EFAULT;
 			}
 			break;
-
+		}
 		default:
 			break;
 	}
